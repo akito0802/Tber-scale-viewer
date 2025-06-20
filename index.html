@@ -81,7 +81,7 @@
       const key = keySelect.value.toLowerCase().replace("#", "sharp");
       const category = categorySelect.value;
       const scale = scaleSelect.value;
-      image.src = `./assets_${category}_${scale}/${key}.png`;
+      image.src = `/Tber-scale-viewer/assets_${category}_${scale}/${key}.png`;
     }
 
     keySelect.addEventListener("change", updateImage);
