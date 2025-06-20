@@ -11,7 +11,7 @@
   </style>
 </head>
 <body>
-  <h1>Tber - Church Mode Viewer</h1>
+  <h1>Tber - ギタースケール辞典</h1>
 
   <label for="key-select">キー：</label>
   <select id="key-select">
@@ -20,34 +20,78 @@
     <option>G#</option><option>A</option><option>A#</option><option>B</option>
   </select>
 
-  <label for="mode-select">チャーチモード：</label>
-  <select id="mode-select">
-    <option value="ionian">Ionian</option>
-    <option value="dorian">Dorian</option>
-    <option value="phrygian">Phrygian</option>
-    <option value="lydian">Lydian</option>
-    <option value="mixolydian">Mixolydian</option>
-    <option value="aeolian">Aeolian</option>
-    <option value="locrian">Locrian</option>
+  <label for="category-select">スケール種別：</label>
+  <select id="category-select">
+    <option value="major">メジャー</option>
+    <option value="minor">マイナー</option>
+    <option value="church">チャーチモード</option>
+  </select>
+
+  <label for="scale-select">スケール：</label>
+  <select id="scale-select">
+    <!-- スケール名はJSで更新 -->
   </select>
 
   <div id="image-container">
-    <img id="scale-image" src="assets_church_ionian/c.png" alt="スケール画像" width="900">
+    <img id="scale-image" src="" alt="スケール画像" width="900">
   </div>
 
   <script>
     const keySelect = document.getElementById("key-select");
-    const modeSelect = document.getElementById("mode-select");
+    const categorySelect = document.getElementById("category-select");
+    const scaleSelect = document.getElementById("scale-select");
     const image = document.getElementById("scale-image");
+
+    const scales = {
+      major: {
+        major: "メジャースケール",
+        pentatonic: "メジャーペンタトニック",
+        blues: "メジャーブルース"
+      },
+      minor: {
+        natural: "ナチュラルマイナー",
+        harmonic: "ハーモニックマイナー",
+        melodic: "メロディックマイナー",
+        pentatonic: "マイナーペンタトニック",
+        blues: "マイナーブルース"
+      },
+      church: {
+        ionian: "アイオニアン",
+        dorian: "ドリアン",
+        phrygian: "フリジアン",
+        lydian: "リディアン",
+        mixolydian: "ミクソリディアン",
+        aeolian: "エオリアン",
+        locrian: "ロクリアン"
+      }
+    };
+
+    function updateScaleOptions() {
+      const category = categorySelect.value;
+      const options = scales[category];
+      scaleSelect.innerHTML = "";
+      for (const value in options) {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = options[value];
+        scaleSelect.appendChild(option);
+      }
+      updateImage();
+    }
 
     function updateImage() {
       const key = keySelect.value.toLowerCase().replace("#", "sharp");
-      const mode = modeSelect.value;
-      image.src = `assets_church_${mode}/${key}.png`;
+      const category = categorySelect.value;
+      const scale = scaleSelect.value;
+      image.src = `assets_${category}_${scale}/${key}.png`;
     }
 
     keySelect.addEventListener("change", updateImage);
-    modeSelect.addEventListener("change", updateImage);
+    categorySelect.addEventListener("change", updateScaleOptions);
+    scaleSelect.addEventListener("change", updateImage);
+
+    // 初期化
+    updateScaleOptions();
   </script>
 </body>
 </html>
