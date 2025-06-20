@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Tber - スケール辞典</title>
+  <style>
+    body { font-family: sans-serif; background: #111; color: white; text-align: center; }
+    select, img { margin: 10px; font-size: 1.2em; }
+    #image-container { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Tber - Church Mode Viewer</h1>
+
+  <label for="key-select">キー：</label>
+  <select id="key-select">
+    <option>C</option><option>C#</option><option>D</option><option>D#</option>
+    <option>E</option><option>F</option><option>F#</option><option>G</option>
+    <option>G#</option><option>A</option><option>A#</option><option>B</option>
+  </select>
+
+  <label for="mode-select">チャーチモード：</label>
+  <select id="mode-select">
+    <option value="ionian">Ionian</option>
+    <option value="dorian">Dorian</option>
+    <option value="phrygian">Phrygian</option>
+    <option value="lydian">Lydian</option>
+    <option value="mixolydian">Mixolydian</option>
+    <option value="aeolian">Aeolian</option>
+    <option value="locrian">Locrian</option>
+  </select>
+
+  <div id="image-container">
+    <img id="scale-image" src="assets_church_ionian/c.png" alt="スケール画像" width="900">
+  </div>
+
+  <script>
+    const keySelect = document.getElementById("key-select");
+    const modeSelect = document.getElementById("mode-select");
+    const image = document.getElementById("scale-image");
+
+    function updateImage() {
+      const key = keySelect.value.toLowerCase().replace("#", "sharp");
+      const mode = modeSelect.value;
+      image.src = `assets_church_${mode}/${key}.png`;
+    }
+
+    keySelect.addEventListener("change", updateImage);
+    modeSelect.addEventListener("change", updateImage);
+  </script>
+</body>
+</html>
